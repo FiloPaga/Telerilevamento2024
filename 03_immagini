@@ -1,0 +1,57 @@
+#forse qui all'inizio devi importare i pacchetti, guarda lo 03 di Duccio
+
+im.list() #per la lista delle immagini
+
+mato <- im.import("matogrosso_ast_2006209_lrg.jpg")
+
+#plotting the data
+plot(mato)
+
+#immagine a singola banda da sentinel, in particolare la seconda banda che è quella del blu in questo caso
+b2 <- im.import("sentinel.dolomites.b2.tif") #ci dice la riflettanza del blu
+#possiamo cambiare la scala di colori
+clg <- colorRampPalette(c("black", "grey", "light grey"))(100) #devo concatenarli perchè se no mi prende solo il primo
+#la parentesi esterna col numero mi da le sfumature
+plot(b2,col=clg) #per cambiare il colore devo plottarlo
+
+#creo un'altra scala di colori
+clSchifo <- colorRampPalette(c("chartreuse", "chocolate", "darkorchid"))(100)
+plot(b2,col=clSchifo)
+
+#importiamo altre bande della stessa immagine
+
+b3 <- im.import("sentinel.dolomites.b3.tif")
+plot(b3)
+
+b4 <- im.import("sentinel.dolomites.b4.tif")
+plot(b4)
+
+b8 <- im.import("sentinel.dolomites.b8.tif")
+plot(b8)
+
+#multiframe ci serve la funzione par
+par(mfrow=c(2,2))
+
+#adesso abbiamo creato la cornice, ora dobbiamo inserire le immagini
+#queste sono inserite automaticamente all'interno del nostro multiframe
+plot(b2, col=clSchifo)
+plot(b3, col=clSchifo)
+plot(b4, col=clSchifo)
+plot(b8, col=clSchifo)
+
+#adesso plottiamo le 4 bande in una singola riga
+clGood <- colorRampPalette(c("brown1", "darkkhaki", "blue"))(100)
+par(mfrow=c(1,4))
+plot(b2, col=clGood)
+plot(b3, col=clGood)
+plot(b4, col=clGood)
+plot(b8, col=clGood)
+
+#facciamo un'immagine satellitare
+stacksent <- c(b2,b3,b4,b8)
+plot(stacksent, col=clGood)
+
+dev.off() #per togliere il par precedente
+
+#voglio solo l'immagine infrarosso
+plot(stacksent[[4]], col=clGood)
