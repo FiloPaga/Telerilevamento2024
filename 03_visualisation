@@ -1,5 +1,8 @@
 #forse qui all'inizio devi importare i pacchetti, guarda lo 03 di Duccio
 
+library(terra)
+library(imageRy) #non servono le "" perchè le abbiamo già scaricate
+
 im.list() #per la lista delle immagini
 
 mato <- im.import("matogrosso_ast_2006209_lrg.jpg")
