@@ -17,7 +17,8 @@ plot(mato)
 b2 <- im.import("sentinel.dolomites.b2.tif") # Ci dice la riflettanza del blu
 # Possiamo creare una scala di colori con questa funzione
 clg <- colorRampPalette(c("black", "grey", "light grey"))(3) # Devo concatenarli perchè se no mi prende solo il primo
-# La parentesi esterna col numero mi da quante sfumature ho al passaggio tra un colore e l'altro 
+# La parentesi esterna col numero mi da quante sfumature ho al passaggio tra un colore e l'altro
+# Importante mettere i colori tra virgolette quando li chiami
 plot(b2,col=clg) # Per cambiare il colore con al nuova scala devo plottarlo
 
 # Creo un'altra scala di colori
@@ -35,12 +36,17 @@ plot(b4)
 b8 <- im.import("sentinel.dolomites.b8.tif") # Near infrared
 plot(b8)
 
-# Multiframe - ci serve la funzione par
-par(mfrow=c(2,2)) # Si mettono sempre prima le righe poi le colonne
+
+# Multiframe
+
+
+# Tramite la funzione par()
+
 # E' come se cresse una cornice 2 x 2
+par(mfrow=c(2,2)) # Si mettono sempre prima le righe poi le colonne
 
 # Abbiamo creato la cornice, ora dobbiamo inserire le immagini
-# Queste sono inserite automaticamente all'interno del nostro multiframe
+# Queste sono inserite automaticamente all'interno del nostro multiframe (riempimento per riga)
 plot(b2, col=clGood)
 plot(b3, col=clGood)
 plot(b4, col=clGood)
@@ -48,39 +54,36 @@ plot(b8, col=clGood)
 
 # Adesso plottiamo le 4 bande in una singola riga
 
-par(mfrow=c(1,4))
+par(mfrow=c(1,4)) # Una riga composta da 4 colonne
 plot(b2, col=clGood)
 plot(b3, col=clGood)
 plot(b4, col=clGood)
 plot(b8, col=clGood)
 
-#facciamo un'immagine satellitare
-stacksent <- c(b2,b3,b4,b8)
-plot(stacksent, col=clGood)
+# Facciamo la stessa operazione ma con un comando diverso - stack
 
-dev.off() #per togliere il par precedente
+stacksent <- c(b2,b3,b4,b8) # Inseriamo le nostre 4 bande in un Array
+plot(stacksent, col=clGood) # Plottiamo direttamente l'Array
+# E' più rapido ma mi crea automaticamente un multiframe 2 x 2 
 
-#voglio solo l'immagine infrarosso
-plot(stacksent[[4]], col=clGood)
+dev.off() #per togliere la grafica precedente
+
+# Voglio solo l'immagine infrarosso
+
+plot(stacksent[[4]], col=clGood) # Richiamo solo il 4° oggetto dell'array. Necessito di due [[]] perchè è in 2 dimensioni.
 dev.off()
 
-# Montare le immagini delle varie bande tutte insieme
+# Montare le immagini delle varie bande tutte insieme - Un'unica immagine satellitare 
 
-# carichiamo i pacchetti che ci servono
-library(terra)
-library(imageRy)
-#io ho già le mie 4 bande importate ma le devo reimp
+# RGB plotting
+# Usiamo direttamente gli elementi dello stacksent
+# Segnamoci i nomi delle bande e a quale elemento corrispondono per comodità
+#stacksent[[1]] = b2= blu
+#stacksent[[2]]= b3 = verde
+#stacksent[[3]]= b4 = rosso
+#stacksent[[4]]= b8 = nearinfrared
 
-#per fare un immagine mettendo le bande insieme
-#RGB plotting
-#usiamo direttamente gli elementi dello stack
-#segnamoci i nomi delle bande
-#stacksent[[1]]=b2=blue
-#stacksent[[2]]=b3=verde
-#stacksent[[3]]=b4=rosso
-#stacksent[[4]]=b8=nearinfrared
-
-#utilizziamo una funzione di imageRy
+# Utilizziamo una funzione di imageRy (sono arrivato qui)
 
 im.plotRGB(stacksent, r=3, g=2, b=1) 
 # im.plotRGB(stacksent, 3, 2, 1) posso anche omettere le lettere pechè è già in ordine
