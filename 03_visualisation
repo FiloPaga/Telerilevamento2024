@@ -55,3 +55,30 @@ dev.off() #per togliere il par precedente
 
 #voglio solo l'immagine infrarosso
 plot(stacksent[[4]], col=clGood)
+dev.off()
+
+# Montare le immagini delle varie bande tutte insieme
+
+# carichiamo i pacchetti che ci servono
+library(terra)
+library(imageRy)
+#io ho già le mie 4 bande importate ma le devo reimp
+
+#per fare un immagine mettendo le bande insieme
+#RGB plotting
+#usiamo direttamente gli elementi dello stack
+#segnamoci i nomi delle bande
+#stacksent[[1]]=b2=blue
+#stacksent[[2]]=b3=verde
+#stacksent[[3]]=b4=rosso
+#stacksent[[4]]=b8=nearinfrared
+
+#utilizziamo una funzione di imageRy
+
+im.plotRGB(stacksent, r=3, g=2, b=1) 
+# im.plotRGB(stacksent, 3, 2, 1) posso anche omettere le lettere pechè è già in ordine
+
+#sostituiamo la banda infrarossa al posto della banda rossa nella posizione del filtro rosso, dunque infrarosso lo visualizzo rosso
+im.plotRGB(stacksent, 4, 2, 1)
+
+
