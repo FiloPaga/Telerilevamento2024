@@ -3,7 +3,7 @@
 
 # Installare i pacchetti dal CRAN
 
-# necessarie le virgolette perchè deve uscire da R, andare sul CRAN e poi ritorna in R per mettere il pacchetto
+# Necessarie le virgolette perchè deve uscire da R, andare sul CRAN e poi ritorna in R per mettere il pacchetto
 install.packages("terra") # pacchetto per le analisi spaziali
 install.packages("devtools") # pacchetto che ti serve per creare il collegamento con GitHub
 
