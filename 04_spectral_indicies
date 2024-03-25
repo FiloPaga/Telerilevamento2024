@@ -1,9 +1,12 @@
-#Spectral Indices
+# Spectral Indices
 
+# come ogni volta per prima cosa richiamiamo i pacchetti con le funzioni che ci interessano
 library(imageRy)
 library(terra)
 
-im.list() # per vedere le immagini disponibili
+im.list() # per vedere le immagini disponibili su imageRy
+
+# Mato Grosso 1992
 
 m1<-im.import("matogrosso_l5_1992219_lrg.jpg") #importo le immagini, usa le virgolette perchè dentro a imageRy sono salvate così
 
@@ -12,20 +15,19 @@ m1<-im.import("matogrosso_l5_1992219_lrg.jpg") #importo le immagini, usa le virg
 # band 2 = red = G
 # band 3 = green = B
 
-# se voglio il plot solo dell'infrarosso faccio plot(m1[[1]])
+# se voglio il plot solo dell'infrarosso faccio plot(m1[[1]]), perchè il primo elemento dell'oggetto è il nir
 
-im.plotRGB(m1, 1, 2, 3)
+im.plotRGB(m1, 1, 2, 3) # di default ho il nir nella componente R
 
-#esercizio: metti nir nella componente green
+# nir nella componente green
 
 im.plotRGB(m1, 2, 1, 3) #metti l'1 nella componente green
 # qui tutto quello che è verde è la foresta fluviale e il rosino è il suolo nudo
 
-# per evidenziare il suolo nudo lo devo mettere in giallo
-# mettendo il nir sul blu, il suolo nudo è giallo
+# mettendo il nir sul blu, il suolo nudo è giallo (evidenziato meglio per il nostro occhio)
 im.plotRGB(m1, 2, 3, 1)
 
-# importing the 2006 image
+# Mato Grosso 2006
 
 m2<-im.import("matogrosso_ast_2006209_lrg.jpg")
 
@@ -37,10 +39,10 @@ im.plotRGB(m2, 2, 1, 3)
 
 im.plotRGB(m2, 2, 3, 1)
 
-# multiframe con tutte le immagini
-# prima riga con le 3 immagini del 92, seconda con quelle del 2006
+# Multiframe con tutte le immagini
+# prima riga con le 3 immagini del 92, la seconda con le 3 immagini del 2006
 
-par(mfrow=c(2,3))
+par(mfrow=c(2,3)) # multiframe 2 righe e 3 colonne
 
 #1992
 im.plotRGB(m1, 1, 2, 3) # nir on R
@@ -52,5 +54,5 @@ im.plotRGB(m2, 1, 2, 3) # nir on R
 im.plotRGB(m2, 2, 1, 3) # nir on G
 im.plotRGB(m2, 2, 3, 1) # nir on B
 
-# qeusto è un modo qualitativo per vedere le differenze
-# per un calcolo quantitativo creiamo un indice
+# questo è un modo qualitativo per vedere le differenze tra le immagini
+# per un calcolo quantitativo creiamo un indice spettrale
